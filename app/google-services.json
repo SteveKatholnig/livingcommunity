@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "213944535648",
+    "firebase_url": "https://living-community.firebaseio.com",
+    "project_id": "living-community",
+    "storage_bucket": "living-community.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213944535648:android:397a925c342b82c3",
+        "android_client_info": {
+          "package_name": "com.example.livingcommunity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213944535648-2vqjbq2flgqu4h95rj7orhp62ng9m6kh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXe6S4_BWuJ6-g4TOpGFyp2Ux2RGg7h7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213944535648:android:40163faef7eacdbf",
+        "android_client_info": {
+          "package_name": "com.katholnigs.livingcommunity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213944535648-2vqjbq2flgqu4h95rj7orhp62ng9m6kh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXe6S4_BWuJ6-g4TOpGFyp2Ux2RGg7h7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
