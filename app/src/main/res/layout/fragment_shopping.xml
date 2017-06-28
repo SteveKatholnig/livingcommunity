@@ -3,13 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.katholnigs.livingcommunity.fragments.shoppingFragment">
+    tools:context="com.katholnigs.livingcommunity.fragments.shoppingFragment"
+    android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Fragment 3"
-        android:textSize="30sp"/>
+        android:layout_margin="0dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/shopping_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:text="@string/title_shopping"
+            android:layout_weight="1.5"
+            android:textSize="25sp"
+            android:id="@+id/budget_headline"
+            android:textColor="@android:color/white"
+            android:layout_margin="5dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_add_white_36dp"
+            android:id="@+id/budget_add"
+            android:layout_weight="0.5"
+            android:clickable="true"
+            android:background="@null"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/shopping_top">
+
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>
