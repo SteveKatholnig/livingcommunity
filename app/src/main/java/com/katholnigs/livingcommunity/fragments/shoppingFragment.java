@@ -55,12 +55,12 @@ public class shoppingFragment extends Fragment {
 
         List<ShoppingItem> data = new ArrayList<>();
 
-        data.add(new ShoppingItem("Grünkohl", "Steve"));
-        data.add(new ShoppingItem("Apples", "Steve"));
-        data.add(new ShoppingItem("Salami", "Marcel"));
-        data.add(new ShoppingItem("Döner", "Konsti"));
-        data.add(new ShoppingItem("Zigaretten", "Steve"));
-        data.add(new ShoppingItem("Wodka", "Ricarda"));
+        data.add(new ShoppingItem("Grünkohl", "Steve", false));
+        data.add(new ShoppingItem("Apples", "Steve", false));
+        data.add(new ShoppingItem("Salami", "Marcel", false));
+        data.add(new ShoppingItem("Döner", "Konsti", false));
+        data.add(new ShoppingItem("Zigaretten", "Steve", false));
+        data.add(new ShoppingItem("Wodka", "Ricarda", false));
 
         return data;
     }

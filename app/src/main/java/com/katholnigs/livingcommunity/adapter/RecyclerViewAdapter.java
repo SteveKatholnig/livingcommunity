@@ -15,8 +15,8 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    List<ShoppingItem> list = Collections.emptyList();
-    Context context;
+    private List<ShoppingItem> list = Collections.emptyList();
+    private Context context;
 
     public RecyclerViewAdapter(List<ShoppingItem> list, Context context) {
         this.list = list;
@@ -27,8 +27,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //Inflate the layout, initialize the View Holder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_row_layout, parent, false);
-        ViewHolder holder = new ViewHolder(v);
-        return holder;
+        return new ViewHolder(v);
 
     }
 
