@@ -76,7 +76,7 @@ public class shoppingFragment extends Fragment {
         Retrofit retrofit = builder.build();
 
         ApiClient client = retrofit.create(ApiClient.class);
-        Call<List<ShoppingItem>> call = client.shoppingList();
+        Call<List<ShoppingItem>> call = client.shoppingList(3);
 
         call.enqueue(new Callback<List<ShoppingItem>>() {
             @Override
