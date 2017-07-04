@@ -3,15 +3,26 @@ package com.katholnigs.livingcommunity.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.katholnigs.livingcommunity.R;
+import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.ShoppingItem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
@@ -32,11 +43,43 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.title.setText(list.get(position).description);
-        //holder.description.setText(list.get(position).user_id);
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        String dateAdded = df.format(list.get(position).date);
+        holder.description.setText(dateAdded);
+        holder.itemCheckBox.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.get(position).done = 1;
+                Retrofit.Builder builder = new Retrofit.Builder()
+                        .baseUrl("http://62.75.166.253/lc.app/public/")
+                        .addConverterFactory(GsonConverterFactory.create());
+                Retrofit retrofit = builder.build();
+
+                ApiClient client = retrofit.create(ApiClient.class);
+                Log.v("myApp", "" + list.get(position).id);
+                Call<Void> call = client.updateShoppingList(list.get(position).id, list.get(position));
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.v("myApp", "Item update successfull");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        try {
+                            throw t;
+                        } catch (Throwable throwable) {
+                            throwable.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
         //holder.imageView.setImageResource(list.get(position).imageId);
 
         //animate(holder);

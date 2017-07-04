@@ -6,10 +6,10 @@
         android:icon="@drawable/ic_euro_symbol_black_24dp"
         android:title="@string/title_budget" />
 
-    <item
+    <!--- <item
         android:id="@+id/navigation_tasks"
         android:icon="@drawable/ic_insert_invitation_black_24dp"
-        android:title="@string/title_tasks" />
+        android:title="@string/title_tasks" /> -->
 
     <item
         android:id="@+id/navigation_shoppping"

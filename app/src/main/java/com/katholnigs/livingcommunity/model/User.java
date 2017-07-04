@@ -8,13 +8,15 @@ public class User {
     public String lastname;
     public int recently_invited;
     public int com_id;
+    public String uid;
 
-    public User(int id, String email, String firstname, String lastname, int recently_invited, int com_id){
+    public User(int id, String email, String firstname, String lastname, int recently_invited, int com_id, String uid){
         this.id = id;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.recently_invited = recently_invited;
         this.com_id = com_id;
+        this.uid = uid;
     }
 }

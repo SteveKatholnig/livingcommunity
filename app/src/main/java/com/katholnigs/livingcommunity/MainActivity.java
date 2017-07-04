@@ -8,12 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import com.katholnigs.livingcommunity.fragments.*;
+import com.katholnigs.livingcommunity.fragments.budgetFragment;
+import com.katholnigs.livingcommunity.fragments.profileFragment;
+import com.katholnigs.livingcommunity.fragments.shoppingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
                     //mTextMessage.setText(R.string.title_home);
                     selectedFragment = budgetFragment.newInstance();
                     break;
-                case R.id.navigation_tasks:
+                //case R.id.navigation_tasks:
                    // mTextMessage.setText(R.string.title_dashboard);
-                    selectedFragment = taskFragment.newInstance();
-                    break;
+                    //selectedFragment = taskFragment.newInstance();
+                    //break;
                 case R.id.navigation_shoppping:
                    // mTextMessage.setText(R.string.title_notifications);
                     selectedFragment = shoppingFragment.newInstance();

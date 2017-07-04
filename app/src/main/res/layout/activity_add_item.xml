@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.katholnigs.livingcommunity.fragments.shoppingFragment"
-    android:orientation="horizontal">
+    tools:context="com.katholnigs.livingcommunity.AddItemActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
         android:background="@color/colorPrimary"
-        android:id="@+id/shopping_top">
+        android:id="@+id/shopping_top"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:text="@string/title_shopping"
+            android:text="@string/title_add_item"
             android:layout_weight="1.5"
             android:textSize="35sp"
             android:id="@+id/budget_headline"
@@ -29,25 +32,30 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_add_white_36dp"
-            android:id="@+id/shopping_add"
+            android:src="@drawable/ic_done_white_36dp"
+            android:id="@+id/shopping_add_comfirmed"
             android:layout_weight="0.5"
             android:clickable="true"
             android:background="@null"/>
 
     </LinearLayout>
-    <RelativeLayout
+
+    <LinearLayout
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/shopping_top">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/recyclerview"
+
+        <EditText
+            android:id="@+id/editTextItemDescription"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="Enter item description"
+            android:inputType="textEmailAddress" />
 
-    </RelativeLayout>
 
+    </LinearLayout>
 
 </RelativeLayout>
