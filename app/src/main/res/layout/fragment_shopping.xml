@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/title_shopping"
             android:layout_weight="1.5"
-            android:textSize="25sp"
+            android:textSize="35sp"
             android:id="@+id/budget_headline"
             android:textColor="@android:color/white"
             android:layout_margin="5dp"/>

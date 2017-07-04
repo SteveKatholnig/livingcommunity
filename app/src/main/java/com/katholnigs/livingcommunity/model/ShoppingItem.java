@@ -6,12 +6,13 @@ import java.sql.Date;
 public class ShoppingItem {
     public String description;
     public Date date;
-    public boolean done;
+    public int done;
     public int com_id;
     public int user_id;
+    public String addedBy;
     public boolean isSelected = false;
 
-    public ShoppingItem(String description, Date date, boolean done, int user_id, int com_id){
+    public ShoppingItem(String description, Date date, int done, int user_id, int com_id){
         this.description = description;
         this.date = date;
         this.done = done;

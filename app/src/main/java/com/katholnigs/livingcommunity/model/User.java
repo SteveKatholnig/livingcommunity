@@ -6,10 +6,10 @@ public class User {
     public String email;
     public String firstname;
     public String lastname;
-    public boolean recently_invited;
+    public int recently_invited;
     public int com_id;
 
-    public User(int id, String email, String firstname, String lastname, boolean recently_invited, int com_id){
+    public User(int id, String email, String firstname, String lastname, int recently_invited, int com_id){
         this.id = id;
         this.email = email;
         this.firstname = firstname;

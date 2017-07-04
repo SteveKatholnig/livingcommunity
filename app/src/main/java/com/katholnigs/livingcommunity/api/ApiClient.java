@@ -12,15 +12,15 @@ import retrofit2.http.Path;
 
 public interface ApiClient {
 
-    //@GET("shoppingList")
-    //Call<List<ShoppingItem>> shoppingList();
+    @GET("shoppingList")
+    Call<List<ShoppingItem>> shoppingList();
 
-    @GET("shoppingList/{com_id}")
-    Call<List<ShoppingItem>> shoppingList(@Path("com_id") int com_id);
+    //@GET("shoppingList/{com_id}")
+    //Call<List<ShoppingItem>> shoppingList(@Path("com_id") int com_id);
 
     @GET("community")
     Call<List<Community>> communityList();
 
-    @GET("user")
-    Call<List<User>> userByName();
+    @GET("user/{id}")
+    Call<User> userByID(@Path("id") int id);
 }

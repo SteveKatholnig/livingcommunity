@@ -10,13 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.adapter.RecyclerViewAdapter;
 import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.ShoppingItem;
+import com.katholnigs.livingcommunity.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,7 +56,7 @@ public class shoppingFragment extends Fragment {
         Date utilDate = new Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         List<ShoppingItem> data = new ArrayList<>();
-        data.add(new ShoppingItem("Grünkohl", sqlDate, false, 1, 3));
+        data.add(new ShoppingItem("Grünkohl", sqlDate, 0, 1, 3));
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, getActivity().getApplication());
@@ -70,18 +74,48 @@ public class shoppingFragment extends Fragment {
 
     public void fill_with_data() {
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd hh:mm:ss")
+                .create();
+
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("http://62.75.166.253/lc.app/public/")
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
 
-        ApiClient client = retrofit.create(ApiClient.class);
-        Call<List<ShoppingItem>> call = client.shoppingList(3);
+        final ApiClient client = retrofit.create(ApiClient.class);
+        Call<List<ShoppingItem>> call = client.shoppingList();
 
         call.enqueue(new Callback<List<ShoppingItem>>() {
             @Override
             public void onResponse(Call<List<ShoppingItem>> call, Response<List<ShoppingItem>> response) {
                 List<ShoppingItem> items = response.body();
+                final HashMap<Integer, User> users = new HashMap<>();
+                for (ShoppingItem i : items){
+                    Call<User> userCall = client.userByID(i.user_id);
+                    userCall.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            User user = response.body();
+                            users.put(user.id, user);
+                            Toast.makeText(getActivity(), ""+ users.size(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            Toast.makeText(getActivity(), "error:(", Toast.LENGTH_SHORT).show();
+                            try {
+                                throw t;
+                            } catch (Throwable throwable) {
+                                throwable.printStackTrace();
+                            }
+                        }
+                    });
+                    Toast.makeText(getActivity(), ""+ users.size(), Toast.LENGTH_SHORT).show();
+                    User userForName = users.get(i.user_id);
+                    i.addedBy = userForName.firstname + " " + userForName.lastname;
+                    Toast.makeText(getActivity(), i.addedBy, Toast.LENGTH_SHORT).show();
+                }
 
                 RecyclerViewAdapter adapter = new RecyclerViewAdapter(items, getActivity().getApplication());
                 recyclerView.setAdapter(adapter);
