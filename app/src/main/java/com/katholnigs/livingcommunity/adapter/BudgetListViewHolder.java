@@ -13,6 +13,7 @@ public class BudgetListViewHolder extends RecyclerView.ViewHolder {
     CardView cv;
     TextView title;
     TextView description;
+    TextView value;
     ImageButton budgetEntryDelete;
 
     public BudgetListViewHolder(View itemView) {
@@ -20,6 +21,7 @@ public class BudgetListViewHolder extends RecyclerView.ViewHolder {
         cv = (CardView) itemView.findViewById(R.id.cardView);
         title = (TextView) itemView.findViewById(R.id.title);
         description = (TextView) itemView.findViewById(R.id.description);
+        value = (TextView) itemView.findViewById(R.id.value);
         budgetEntryDelete = (ImageButton) itemView.findViewById(R.id.budget_delete);
     }
 }

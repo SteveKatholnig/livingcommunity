@@ -4,10 +4,10 @@ public class BudgetEntry {
     public int id;
     public String credit;
     public String owe;
-    public String description;
     public String date;
     public int user_id;
     public int com_id;
+    public String description;
 
     public BudgetEntry(String credit, String owe, String date, int user_id, int com_id, String description){
         this.credit = credit;

@@ -97,7 +97,7 @@ public class ShoppingFragment extends Fragment {
         itemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(itemAnimator);
 
-        callAsynchronousTask();
+        //callAsynchronousTask();
         fill_with_data();
 
     }

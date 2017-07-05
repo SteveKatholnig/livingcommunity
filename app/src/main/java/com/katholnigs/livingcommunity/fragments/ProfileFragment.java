@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.activities.CreateCommunityActivity;
 import com.katholnigs.livingcommunity.activities.InviteCommunityActivity;
 import com.katholnigs.livingcommunity.activities.LoginActivity;
-import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.Community;
 import com.katholnigs.livingcommunity.model.User;
@@ -100,14 +99,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         buttonInviteToCommunity = (Button) getView().findViewById(R.id.buttonInviteCommunity);
 
         //displaying logged in user name
-        textViewUserEmail.setText(user.getEmail());
+        textViewUserEmail.setText("Email: " + user.getEmail());
 
         //adding listener to button
         buttonLogout.setOnClickListener(this);
         buttonLeaveCommunity.setOnClickListener(this);
         buttonInviteToCommunity.setOnClickListener(this);
 
-        callAsynchronousTask();
+        //callAsynchronousTask();
         fill_with_data();
     }
 
@@ -201,8 +200,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 for (User u : user) {
 
-                    textViewUserFirstname.setText(u.firstname);
-                    textViewUserLastname.setText(u.lastname);
+                    textViewUserFirstname.setText("Firstname: " + u.firstname);
+                    textViewUserLastname.setText("Lastname: " + u.lastname);
 
                     if (u.recently_invited > 0){
                         buttonLeaveCommunity.setText("Join community");
@@ -217,7 +216,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "error with user!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "error with user!", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
                 } catch (Throwable throwable) {
@@ -289,7 +288,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(@NonNull Call<Community> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
                 } catch (Throwable throwable) {

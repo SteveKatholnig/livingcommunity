@@ -39,8 +39,8 @@ public interface ApiClient {
     @GET("user/{id}")
     Call<List<User>> userByUID(@Path("id") String id);
 
-    //@GET("userByCommunity/{id}")
-    //Call<List<User>> userByComId(@Path("id") int id);
+    @GET("userByCommunity/{id}")
+    Call<List<User>> userByComId(@Path("id") int id);
 
     @GET("userByEmail")
     Call<List<User>> userByEmail(@Query("email") String email);

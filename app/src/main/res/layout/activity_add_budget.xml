@@ -37,14 +37,14 @@
 
     </LinearLayout>
 
-    <Spinner
+    <!--- <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/num"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/add_budget_input"
         android:layout_marginBottom="5dp"
-        android:id="@+id/add_budget_spinner"/>
+        android:id="@+id/add_budget_spinner"/> -->
 
     <LinearLayout
         android:layout_centerVertical="true"

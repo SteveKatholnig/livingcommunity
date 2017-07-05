@@ -26,14 +26,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:text="Title"
-                android:textSize="30sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
-                android:text="Description" />
+                android:text="Description"
+                android:textSize="10sp" />
 
         </RelativeLayout>
 
@@ -43,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerInParent="true"
-            android:text="Description" />
+            android:text="Description"
+            android:textSize="18sp"/>
 
         <ImageButton
             android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package com.katholnigs.livingcommunity.adapter;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,10 +55,17 @@ public class BudgetListRecyclerViewAdapter extends RecyclerView.Adapter<BudgetLi
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = df.parse(list.get(position).date);
-            SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.yyyy / HH:mm:ss");
+            SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.yyyy");
             String dateAdded = df2.format(date);
             holder.description.setText(dateAdded);
             holder.title.setText(list.get(position).description);
+            if(list.get(position).credit.equals("0.00")){
+                holder.value.setText("-" + list.get(position).owe);
+                holder.value.setTextColor(Color.rgb(255,0,0));
+            }else if (list.get(position).owe.equals("0.00")){
+                holder.value.setText("+" + list.get(position).credit);
+                holder.value.setTextColor(Color.rgb(0,255,0));
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
