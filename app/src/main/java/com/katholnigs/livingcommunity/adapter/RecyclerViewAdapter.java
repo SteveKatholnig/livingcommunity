@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
-import com.katholnigs.livingcommunity.fragments.shoppingFragment;
+import com.katholnigs.livingcommunity.fragments.ShoppingFragment;
 import com.katholnigs.livingcommunity.model.ShoppingItem;
 
 import java.text.ParseException;
@@ -30,9 +30,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private List<ShoppingItem> list = Collections.emptyList();
     private Context context;
-    private shoppingFragment fragment;
+    private ShoppingFragment fragment;
 
-    public RecyclerViewAdapter(List<ShoppingItem> list, Context context, shoppingFragment fragment) {
+    public RecyclerViewAdapter(List<ShoppingItem> list, Context context, ShoppingFragment fragment) {
         this.list = list;
         this.context = context;
         this.fragment = fragment;

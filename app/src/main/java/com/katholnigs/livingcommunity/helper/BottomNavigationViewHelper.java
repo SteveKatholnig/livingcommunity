@@ -1,4 +1,4 @@
-package com.katholnigs.livingcommunity;
+package com.katholnigs.livingcommunity.helper;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;

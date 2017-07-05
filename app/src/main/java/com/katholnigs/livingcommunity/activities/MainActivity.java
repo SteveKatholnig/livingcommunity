@@ -1,4 +1,4 @@
-package com.katholnigs.livingcommunity;
+package com.katholnigs.livingcommunity.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,11 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.katholnigs.livingcommunity.fragments.budgetFragment;
-import com.katholnigs.livingcommunity.fragments.profileFragment;
-import com.katholnigs.livingcommunity.fragments.shoppingFragment;
+import com.katholnigs.livingcommunity.R;
+import com.katholnigs.livingcommunity.fragments.BudgetFragment;
+import com.katholnigs.livingcommunity.fragments.ProfileFragment;
+import com.katholnigs.livingcommunity.fragments.ShoppingFragment;
+import com.katholnigs.livingcommunity.helper.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,19 +33,19 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_budget:
                     //mTextMessage.setText(R.string.title_home);
-                    selectedFragment = budgetFragment.newInstance();
+                    selectedFragment = BudgetFragment.newInstance();
                     break;
                 //case R.id.navigation_tasks:
                    // mTextMessage.setText(R.string.title_dashboard);
-                    //selectedFragment = taskFragment.newInstance();
+                    //selectedFragment = TaskFragment.newInstance();
                     //break;
                 case R.id.navigation_shoppping:
                    // mTextMessage.setText(R.string.title_notifications);
-                    selectedFragment = shoppingFragment.newInstance();
+                    selectedFragment = ShoppingFragment.newInstance();
                     break;
                 case R.id.navigation_profile:
                     // mTextMessage.setText(R.string.title_notifications);
-                    selectedFragment = profileFragment.newInstance();
+                    selectedFragment = ProfileFragment.newInstance();
                     break;
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Manually displaying the first fragment - one time only
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, budgetFragment.newInstance());
+        transaction.replace(R.id.frame_layout, BudgetFragment.newInstance());
         transaction.commit();
 
         //Used to select an item programmatically

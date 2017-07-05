@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.katholnigs.livingcommunity.AddItemActivity;
+import com.katholnigs.livingcommunity.activities.AddItemActivity;
 import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.adapter.RecyclerViewAdapter;
 import com.katholnigs.livingcommunity.api.ApiClient;
@@ -38,14 +39,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class shoppingFragment extends Fragment {
+public class ShoppingFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FirebaseAuth firebaseAuth;
 
-    public static shoppingFragment newInstance() {
-        shoppingFragment fragment = new shoppingFragment();
-        return fragment;
+    public static ShoppingFragment newInstance() {
+        return new ShoppingFragment();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class shoppingFragment extends Fragment {
             call.enqueue(new Callback<List<User>>() {
 
                 @Override
-                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
 
                     List<User> user = response.body();
 
@@ -141,21 +141,19 @@ public class shoppingFragment extends Fragment {
 
                         callList.enqueue(new Callback<List<ShoppingItem>>() {
                             @Override
-                            public void onResponse(Call<List<ShoppingItem>> call, Response<List<ShoppingItem>> response) {
+                            public void onResponse(@NonNull Call<List<ShoppingItem>> call, @NonNull Response<List<ShoppingItem>> response) {
                                 List<ShoppingItem> items = response.body();
 
-                                //SystemClock.sleep(200);
-                                //TODO: exception
                                 try{
-                                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(items, getActivity().getApplication(), shoppingFragment.this);
+                                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(items, getActivity().getApplication(), ShoppingFragment.this);
                                     recyclerView.setAdapter(adapter);
                                 } catch(Exception e){
-
+                                    e.printStackTrace();
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<List<ShoppingItem>> call, Throwable t) {
+                            public void onFailure(@NonNull Call<List<ShoppingItem>> call, @NonNull Throwable t) {
                                 //Toast.makeText(getActivity(), "error:(", Toast.LENGTH_SHORT).show();
                                 try {
                                     throw t;
@@ -168,7 +166,7 @@ public class shoppingFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<List<User>> call, Throwable t) {
+                public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                     //Toast.makeText(getActivity(), "error with user!", Toast.LENGTH_SHORT).show();
                     try {
                         throw t;
@@ -178,7 +176,7 @@ public class shoppingFragment extends Fragment {
                 }
             });
         } catch (Exception e){
-
+            e.printStackTrace();
         }
     }
 

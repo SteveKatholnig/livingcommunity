@@ -1,4 +1,4 @@
-package com.katholnigs.livingcommunity;
+package com.katholnigs.livingcommunity.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.User;
 
@@ -59,7 +60,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             finish();
 
             //and open profile activity
-            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
         //initializing views

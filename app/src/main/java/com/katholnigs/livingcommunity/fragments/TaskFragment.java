@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.katholnigs.livingcommunity.R;
 
-public class budgetFragment extends Fragment {
-    public static budgetFragment newInstance() {
-        budgetFragment fragment = new budgetFragment();
+public class TaskFragment extends Fragment {
+    public static TaskFragment newInstance() {
+        TaskFragment fragment = new TaskFragment();
         return fragment;
     }
 
@@ -22,6 +22,6 @@ public class budgetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_budget, container, false);
+        return inflater.inflate(R.layout.fragment_tasks, container, false);
     }
 }

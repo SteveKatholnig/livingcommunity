@@ -1,4 +1,4 @@
-package com.katholnigs.livingcommunity;
+package com.katholnigs.livingcommunity.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.User;
 

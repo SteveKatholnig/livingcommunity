@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.katholnigs.livingcommunity.CreateCommunityActivity;
-import com.katholnigs.livingcommunity.InviteCommunityActivity;
-import com.katholnigs.livingcommunity.LoginActivity;
+import com.katholnigs.livingcommunity.activities.CreateCommunityActivity;
+import com.katholnigs.livingcommunity.activities.InviteCommunityActivity;
+import com.katholnigs.livingcommunity.activities.LoginActivity;
 import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.Community;
@@ -33,10 +34,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class profileFragment extends Fragment implements View.OnClickListener {
-    public static profileFragment newInstance() {
-        profileFragment fragment = new profileFragment();
-        return fragment;
+public class ProfileFragment extends Fragment implements View.OnClickListener {
+    public static ProfileFragment newInstance() {
+        return new ProfileFragment();
     }
 
     //firebase auth object
@@ -142,7 +142,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
             call.enqueue(new Callback<List<User>>() {
 
                 @Override
-                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
 
                     List<User> user = response.body();
 
@@ -152,7 +152,6 @@ public class profileFragment extends Fragment implements View.OnClickListener {
                             u.recently_invited = 0;
                             buttonInviteToCommunity.setText("Invite");
                         }
-                        // TODO: check if correct button was pressed
                         else if(buttonInviteToCommunity.getText().equals("Decline") && !(view == buttonLeaveCommunity)){
                             Log.v("myApp", "was declined");
                             buttonInviteToCommunity.setText("Invite");
@@ -167,7 +166,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
                 }
 
                 @Override
-                public void onFailure(Call<List<User>> call, Throwable t) {
+                public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
 
                     try {
                         throw t;
@@ -196,7 +195,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
         call.enqueue(new Callback<List<User>>() {
 
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
 
                 List<User> user = response.body();
 
@@ -217,7 +216,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), "error with user!", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
@@ -241,7 +240,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
 
         callCommunity.enqueue(new Callback<Community>() {
             @Override
-            public void onResponse(Call<Community> call, Response<Community> response) {
+            public void onResponse(@NonNull Call<Community> call, @NonNull Response<Community> response) {
                 Community community = response.body();
                 //Toast.makeText(getActivity(), community.size(), Toast.LENGTH_SHORT).show();
                 textViewCommunityName.setText(community.name);
@@ -257,7 +256,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<Community> call, Throwable t) {
+            public void onFailure(@NonNull Call<Community> call, @NonNull Throwable t) {
                 //Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
@@ -280,7 +279,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
 
         callCommunity.enqueue(new Callback<Community>() {
             @Override
-            public void onResponse(Call<Community> call, Response<Community> response) {
+            public void onResponse(@NonNull Call<Community> call, @NonNull Response<Community> response) {
                 Community community = response.body();
                 //Toast.makeText(getActivity(), community.size(), Toast.LENGTH_SHORT).show();
                 textViewCommunityName.setText("Invited to: " + community.name);
@@ -289,7 +288,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<Community> call, Throwable t) {
+            public void onFailure(@NonNull Call<Community> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
@@ -311,12 +310,12 @@ public class profileFragment extends Fragment implements View.OnClickListener {
 
         call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 fill_with_data();
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
 
                 try {
                     throw t;

@@ -1,4 +1,4 @@
-package com.katholnigs.livingcommunity;
+package com.katholnigs.livingcommunity.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,11 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.katholnigs.livingcommunity.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
-
-    // TODO: add toast for wrong login credentials
 
     //defining views
     private Button buttonSignIn;
@@ -99,6 +97,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //start the profile activity
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }else{
+                            //display some message here
+                            Toast.makeText(LoginActivity.this,"Please enter valid login credentials!",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
