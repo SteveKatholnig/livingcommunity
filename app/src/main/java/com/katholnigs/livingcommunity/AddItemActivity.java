@@ -78,7 +78,7 @@ public class AddItemActivity extends AppCompatActivity {
                                 ShoppingItem itemToAdd = new ShoppingItem(description, sqlDate, 0, u.id, u.com_id);
                                 sendNetworkRequest(itemToAdd);
                             }
-                            finish();
+
                         }
 
                         @Override
@@ -117,12 +117,13 @@ public class AddItemActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(AddItemActivity.this, "Item was added!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AddItemActivity.this, "Item was added!", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(AddItemActivity.this, "error:(", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AddItemActivity.this, "error:(", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
                 } catch (Throwable throwable) {

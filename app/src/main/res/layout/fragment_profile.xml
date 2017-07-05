@@ -18,21 +18,12 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:text="@string/title_shopping"
+            android:text="Profile"
             android:layout_weight="1.5"
             android:textSize="35sp"
             android:id="@+id/budget_headline"
             android:textColor="@android:color/white"
             android:layout_margin="5dp"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_add_white_36dp"
-            android:id="@+id/shopping_add"
-            android:layout_weight="0.5"
-            android:clickable="true"
-            android:background="@null"/>
 
 
 
@@ -132,14 +123,34 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="40dp"/>
 
-                <Button
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></ListView>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Leave Community"
-                    android:id="@+id/buttonLeaveCommunity"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="40dp"/>
+                    android:layout_gravity="center_horizontal">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Leave Community"
+                        android:id="@+id/buttonLeaveCommunity"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="40dp"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Invite"
+                        android:id="@+id/buttonInviteCommunity"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="40dp"
+                        android:layout_toRightOf="@+id/buttonLeaveCommunity"/>
+
+                </RelativeLayout>
 
 
             </LinearLayout>

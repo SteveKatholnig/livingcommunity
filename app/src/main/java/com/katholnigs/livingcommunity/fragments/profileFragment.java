@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.katholnigs.livingcommunity.CreateCommunityActivity;
+import com.katholnigs.livingcommunity.InviteCommunityActivity;
 import com.katholnigs.livingcommunity.LoginActivity;
 import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
@@ -35,6 +37,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+    private final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     //view objects
     private TextView textViewUserEmail;
@@ -43,6 +46,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
     private TextView textViewCommunityName;
     private Button buttonLogout;
     private Button buttonLeaveCommunity;
+    private Button buttonInviteToCommunity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,13 @@ public class profileFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        fill_with_data();
     }
 
     @Override
@@ -82,6 +93,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
         textViewCommunityName = (TextView) getView().findViewById(R.id.community_name);
         buttonLogout = (Button) getView().findViewById(R.id.buttonLogout);
         buttonLeaveCommunity = (Button) getView().findViewById(R.id.buttonLeaveCommunity);
+        buttonInviteToCommunity = (Button) getView().findViewById(R.id.buttonInviteCommunity);
 
         //displaying logged in user name
         textViewUserEmail.setText(user.getEmail());
@@ -89,12 +101,13 @@ public class profileFragment extends Fragment implements View.OnClickListener {
         //adding listener to button
         buttonLogout.setOnClickListener(this);
         buttonLeaveCommunity.setOnClickListener(this);
+        buttonInviteToCommunity.setOnClickListener(this);
 
         fill_with_data();
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(final View view) {
         //if logout is pressed
         if (view == buttonLogout) {
             //logging out the user
@@ -103,15 +116,68 @@ public class profileFragment extends Fragment implements View.OnClickListener {
             getActivity().finish();
             //starting login activity
             startActivity(new Intent(getActivity(), LoginActivity.class));
-        } else if (view == buttonLeaveCommunity) {
+        } else if (view == buttonInviteToCommunity && buttonInviteToCommunity.getText().equals("Invite")){
+            startActivity(new Intent(getActivity(), InviteCommunityActivity.class));
+        } else if (view == buttonLeaveCommunity && buttonLeaveCommunity.getText().equals("Create community")){
 
+            startActivity(new Intent(getActivity(), CreateCommunityActivity.class));
+
+        } else if (view == buttonLeaveCommunity ||  buttonInviteToCommunity.getText().equals("Decline")) {
+            final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl("http://62.75.166.253/lc.app/public/")
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+
+            ApiClient client = retrofit.create(ApiClient.class);
+            Log.v("myApp", currentFirebaseUser.getUid());
+            Call<List<User>> call = client.userByUID(currentFirebaseUser.getUid());
+
+            call.enqueue(new Callback<List<User>>() {
+
+                @Override
+                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+
+                    List<User> user = response.body();
+
+                    for (User u : user){
+                        if(buttonLeaveCommunity.getText().equals("Join community") && (view == buttonLeaveCommunity)){
+                            u.com_id = u.recently_invited;
+                            u.recently_invited = 0;
+                            buttonInviteToCommunity.setText("Invite");
+                        }
+                        // TODO: check if correct button was pressed
+                        else if(buttonInviteToCommunity.getText().equals("Decline") && !(view == buttonLeaveCommunity)){
+                            Log.v("myApp", "was declined");
+                            buttonInviteToCommunity.setText("Invite");
+                            u.recently_invited = 0;
+                        } else{
+                            u.com_id = 1;
+                        }
+
+                        sendNetworkRequest(u);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<User>> call, Throwable t) {
+
+                    try {
+                        throw t;
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                }
+            });
         }
     }
 
     public void fill_with_data() {
 
         firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("http://62.75.166.253/lc.app/public/")
@@ -134,33 +200,13 @@ public class profileFragment extends Fragment implements View.OnClickListener {
                     textViewUserFirstname.setText(u.firstname);
                     textViewUserLastname.setText(u.lastname);
 
-                    Retrofit.Builder builder = new Retrofit.Builder()
-                            .baseUrl("http://62.75.166.253/lc.app/public/")
-                            .addConverterFactory(GsonConverterFactory.create());
-                    Retrofit retrofit = builder.build();
-
-                    ApiClient client = retrofit.create(ApiClient.class);
-                    Log.v("myApp", currentFirebaseUser.getUid());
-                    Call<Community> callCommunity = client.communityByID(u.com_id);
-
-                    callCommunity.enqueue(new Callback<Community>() {
-                        @Override
-                        public void onResponse(Call<Community> call, Response<Community> response) {
-                            Community community = response.body();
-                            //Toast.makeText(getActivity(), community.size(), Toast.LENGTH_SHORT).show();
-                            textViewCommunityName.setText(community.name);
-                        }
-
-                        @Override
-                        public void onFailure(Call<Community> call, Throwable t) {
-                            Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
-                            try {
-                                throw t;
-                            } catch (Throwable throwable) {
-                                throwable.printStackTrace();
-                            }
-                        }
-                    });
+                    if (u.recently_invited > 0){
+                        buttonLeaveCommunity.setText("Join community");
+                        buttonInviteToCommunity.setText("Decline");
+                        getCommunityForInvite(u);
+                    }else{
+                        getCommunity(u);
+                    }
 
                 }
             }
@@ -176,6 +222,103 @@ public class profileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+    private void getCommunity(final User u) {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://62.75.166.253/lc.app/public/")
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        ApiClient client = retrofit.create(ApiClient.class);
+        Log.v("myApp", currentFirebaseUser.getUid());
+        Call<Community> callCommunity = client.communityByID(u.com_id);
+
+        callCommunity.enqueue(new Callback<Community>() {
+            @Override
+            public void onResponse(Call<Community> call, Response<Community> response) {
+                Community community = response.body();
+                //Toast.makeText(getActivity(), community.size(), Toast.LENGTH_SHORT).show();
+                textViewCommunityName.setText(community.name);
+
+                if (community.id == 1){
+                    buttonLeaveCommunity.setText("Create community");
+                    buttonInviteToCommunity.setVisibility(View.GONE);
+                } else if(community.id > 1){
+                    buttonLeaveCommunity.setText("Leave community");
+                    buttonInviteToCommunity.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Community> call, Throwable t) {
+                Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
+                try {
+                    throw t;
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void getCommunityForInvite(final User u) {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://62.75.166.253/lc.app/public/")
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        ApiClient client = retrofit.create(ApiClient.class);
+        Log.v("myApp", currentFirebaseUser.getUid());
+        Call<Community> callCommunity = client.communityByID(u.recently_invited);
+
+        callCommunity.enqueue(new Callback<Community>() {
+            @Override
+            public void onResponse(Call<Community> call, Response<Community> response) {
+                Community community = response.body();
+                //Toast.makeText(getActivity(), community.size(), Toast.LENGTH_SHORT).show();
+                textViewCommunityName.setText("Invited to: " + community.name);
+
+            }
+
+            @Override
+            public void onFailure(Call<Community> call, Throwable t) {
+                Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
+                try {
+                    throw t;
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void sendNetworkRequest(User user) {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://62.75.166.253/lc.app/public/")
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        ApiClient client = retrofit.create(ApiClient.class);
+        Call<Void> call = client.updateUser(user.id, user);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                fill_with_data();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+                try {
+                    throw t;
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        });
     }
 
 }

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -83,7 +82,7 @@ public class shoppingFragment extends Fragment {
         Date utilDate = new Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         List<ShoppingItem> data = new ArrayList<>();
-        data.add(new ShoppingItem("Grünkohl", sqlDate, 0, 1, 3));
+        //data.add(new ShoppingItem("Grünkohl", sqlDate, 0, 1, 3));
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, getActivity().getApplication());
@@ -120,7 +119,7 @@ public class shoppingFragment extends Fragment {
 
                 List<User> user = response.body();
 
-                Toast.makeText(getActivity(), "" + user.size(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "" + user.size(), Toast.LENGTH_SHORT).show();
 
                 for (User u : user){
 
@@ -141,14 +140,19 @@ public class shoppingFragment extends Fragment {
                         public void onResponse(Call<List<ShoppingItem>> call, Response<List<ShoppingItem>> response) {
                             List<ShoppingItem> items = response.body();
 
-                            SystemClock.sleep(100);
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(items, getActivity().getApplication());
-                            recyclerView.setAdapter(adapter);
+                            SystemClock.sleep(200);
+                            //TODO: exception
+                            try{
+                                RecyclerViewAdapter adapter = new RecyclerViewAdapter(items, getActivity().getApplication());
+                                recyclerView.setAdapter(adapter);
+                            } catch(Exception e){
+
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<List<ShoppingItem>> call, Throwable t) {
-                            Toast.makeText(getActivity(), "error:(", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "error:(", Toast.LENGTH_SHORT).show();
                             try {
                                 throw t;
                             } catch (Throwable throwable) {
@@ -161,7 +165,7 @@ public class shoppingFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                Toast.makeText(getActivity(), "error with user!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "error with user!", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
                 } catch (Throwable throwable) {

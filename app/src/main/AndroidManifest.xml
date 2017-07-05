@@ -41,6 +41,10 @@
         </activity>
         <activity android:name=".AddItemActivity">
         </activity>
+        <activity android:name=".CreateCommunityActivity">
+        </activity>
+        <activity android:name=".InviteCommunityActivity">
+        </activity>
     </application>
 
 </manifest>
