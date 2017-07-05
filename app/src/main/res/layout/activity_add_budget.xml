@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.katholnigs.livingcommunity.activities.AddItemActivity">
+    tools:context="com.katholnigs.livingcommunity.activities.AddBudgetActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:id="@+id/shopping_top">
+        android:id="@+id/add_budget_top">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:text="@string/title_add_item"
+            android:text="@string/title_add_budget"
             android:layout_weight="1.5"
             android:textSize="28sp"
             android:id="@+id/budget_headline"
@@ -30,26 +30,45 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_done_white_36dp"
-            android:id="@+id/shopping_add_comfirmed"
+            android:id="@+id/budget_add_comfirmed"
             android:layout_weight="0.5"
             android:clickable="true"
             android:background="@drawable/state_list_drawable"/>
 
     </LinearLayout>
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/num"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/add_budget_input"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/add_budget_spinner"/>
+
     <LinearLayout
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:id="@+id/add_budget_input">
 
         <EditText
-            android:id="@+id/editTextItemDescription"
+            android:id="@+id/editTextAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter item description"
+            android:hint="Enter the value"
+            android:textSize="25dp"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editTextEntryDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="Enter entry description"
             android:textSize="25dp"
             android:inputType="text" />
 

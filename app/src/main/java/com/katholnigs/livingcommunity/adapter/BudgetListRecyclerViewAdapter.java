@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
-import com.katholnigs.livingcommunity.fragments.ShoppingFragment;
-import com.katholnigs.livingcommunity.model.ShoppingItem;
+import com.katholnigs.livingcommunity.fragments.BudgetFragment;
+import com.katholnigs.livingcommunity.model.BudgetEntry;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,44 +26,44 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class BudgetListRecyclerViewAdapter extends RecyclerView.Adapter<BudgetListViewHolder> {
 
-    private List<ShoppingItem> list = Collections.emptyList();
+    private List<BudgetEntry> list = Collections.emptyList();
     private Context context;
-    private ShoppingFragment fragment;
+    private BudgetFragment fragment;
 
-    public RecyclerViewAdapter(List<ShoppingItem> list, Context context, ShoppingFragment fragment) {
+    public BudgetListRecyclerViewAdapter(List<BudgetEntry> list, Context context, BudgetFragment fragment) {
         this.list = list;
         this.context = context;
         this.fragment = fragment;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BudgetListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //Inflate the layout, initialize the View Holder
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_row_layout, parent, false);
-        return new ViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.budget_row_layout, parent, false);
+        return new BudgetListViewHolder(v);
 
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final BudgetListViewHolder holder, final int position) {
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
-        holder.title.setText(list.get(position).description);
+        //holder.title.setText(list.get(position).description);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = df.parse(list.get(position).date);
             SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.yyyy / HH:mm:ss");
             String dateAdded = df2.format(date);
             holder.description.setText(dateAdded);
+            holder.title.setText(list.get(position).description);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.itemCheckBox.setOnClickListener(new OnClickListener() {
+        holder.budgetEntryDelete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                list.get(position).done = 1;
                 Retrofit.Builder builder = new Retrofit.Builder()
                         .baseUrl("http://62.75.166.253/lc.app/public/")
                         .addConverterFactory(GsonConverterFactory.create());
@@ -71,12 +71,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
                 ApiClient client = retrofit.create(ApiClient.class);
                 Log.v("myApp", "" + list.get(position).id);
-                Call<Void> call = client.updateShoppingList(list.get(position).id, list.get(position));
+
+                Call<Void> call = client.deleteBudgetEntry(list.get(position).id);
 
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.v("myApp", "Item update successfull");
                         fragment.fill_with_data();
                     }
 
@@ -89,6 +89,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
                         }
                     }
                 });
+
             }
         });
         //holder.imageView.setImageResource(list.get(position).imageId);
@@ -109,13 +110,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     // Insert a new item to the RecyclerView on a predefined position
-    public void insert(int position, ShoppingItem data) {
+    public void insert(int position, BudgetEntry data) {
         list.add(position, data);
         notifyItemInserted(position);
     }
 
     // Remove a RecyclerView item containing a specified Data object
-    public void remove(ShoppingItem data) {
+    public void remove(BudgetEntry data) {
         int position = list.indexOf(data);
         list.remove(position);
         notifyItemRemoved(position);

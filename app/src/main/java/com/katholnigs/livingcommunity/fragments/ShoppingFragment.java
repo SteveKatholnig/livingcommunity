@@ -22,7 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.katholnigs.livingcommunity.activities.AddItemActivity;
 import com.katholnigs.livingcommunity.R;
-import com.katholnigs.livingcommunity.adapter.RecyclerViewAdapter;
+import com.katholnigs.livingcommunity.adapter.ShoppingListRecyclerViewAdapter;
 import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.ShoppingItem;
 import com.katholnigs.livingcommunity.model.User;
@@ -88,17 +88,17 @@ public class ShoppingFragment extends Fragment {
         //data.add(new ShoppingItem("Grünkohl", sqlDate, 0, 1, 3));
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, getActivity().getApplication(), this);
+        ShoppingListRecyclerViewAdapter adapter = new ShoppingListRecyclerViewAdapter(data, getActivity().getApplication(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        callAsynchronousTask();
-        fill_with_data();
 
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(itemAnimator);
+
+        callAsynchronousTask();
+        fill_with_data();
 
     }
 
@@ -145,7 +145,7 @@ public class ShoppingFragment extends Fragment {
                                 List<ShoppingItem> items = response.body();
 
                                 try{
-                                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(items, getActivity().getApplication(), ShoppingFragment.this);
+                                    ShoppingListRecyclerViewAdapter adapter = new ShoppingListRecyclerViewAdapter(items, getActivity().getApplication(), ShoppingFragment.this);
                                     recyclerView.setAdapter(adapter);
                                 } catch(Exception e){
                                     e.printStackTrace();
