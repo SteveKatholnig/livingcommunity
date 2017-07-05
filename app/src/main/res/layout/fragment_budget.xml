@@ -19,7 +19,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/title_budget"
             android:layout_weight="1.5"
-            android:textSize="25sp"
+            android:textSize="28sp"
             android:id="@+id/budget_headline"
             android:textColor="@android:color/white"
             android:layout_margin="5dp"/>
@@ -30,7 +30,7 @@
             android:src="@drawable/ic_add_white_36dp"
             android:id="@+id/budget_add"
             android:layout_weight="0.5"
-            android:background="@null"/>
+            android:background="@drawable/state_list_drawable"/>
 
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.katholnigs.livingcommunity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,10 +16,7 @@ import com.katholnigs.livingcommunity.api.ApiClient;
 import com.katholnigs.livingcommunity.model.ShoppingItem;
 import com.katholnigs.livingcommunity.model.User;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,16 +40,10 @@ public class AddItemActivity extends AppCompatActivity {
         OnClickListener buttonListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    EditText itemDescription = (EditText) findViewById(R.id.editTextItemDescription);
-                    final String description = itemDescription.getText().toString();
+                EditText itemDescription = (EditText) findViewById(R.id.editTextItemDescription);
+                final String description = itemDescription.getText().toString();
 
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String date = df.format(Calendar.getInstance().getTime());
-
-                    Date parsedDate = df.parse(date);
-                    final java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
-
+                if (!TextUtils.isEmpty(description)){
                     firebaseAuth = FirebaseAuth.getInstance();
                     final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -71,19 +63,26 @@ public class AddItemActivity extends AppCompatActivity {
 
                             List<User> user = response.body();
 
-                            Toast.makeText(AddItemActivity.this, "" + user.size(), Toast.LENGTH_SHORT).show();
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String date = df.format(new Date());
+                            Log.v("myApp", date);
+
+                            //Toast.makeText(AddItemActivity.this, "" + user.size(), Toast.LENGTH_SHORT).show();
 
                             for (User u : user){
-
-                                ShoppingItem itemToAdd = new ShoppingItem(description, sqlDate, 0, u.id, u.com_id);
-                                sendNetworkRequest(itemToAdd);
+                                if(u.com_id != 1){
+                                    ShoppingItem itemToAdd = new ShoppingItem(description, date, 0, u.id, u.com_id);
+                                    sendNetworkRequest(itemToAdd);
+                                }else{
+                                    finish();
+                                }
                             }
 
                         }
 
                         @Override
                         public void onFailure(Call<List<User>> call, Throwable t) {
-                            Toast.makeText(AddItemActivity.this, "error with user!", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(AddItemActivity.this, "error with user!", Toast.LENGTH_SHORT).show();
                             try {
                                 throw t;
                             } catch (Throwable throwable) {
@@ -91,11 +90,9 @@ public class AddItemActivity extends AppCompatActivity {
                             }
                         }
                     });
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                }else{
+                    Toast.makeText(AddItemActivity.this, "Enter a item description!", Toast.LENGTH_SHORT).show();
                 }
-
 
 
 

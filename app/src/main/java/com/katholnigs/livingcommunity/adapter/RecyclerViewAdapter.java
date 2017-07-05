@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 
 import com.katholnigs.livingcommunity.R;
 import com.katholnigs.livingcommunity.api.ApiClient;
+import com.katholnigs.livingcommunity.fragments.shoppingFragment;
 import com.katholnigs.livingcommunity.model.ShoppingItem;
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,10 +30,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private List<ShoppingItem> list = Collections.emptyList();
     private Context context;
+    private shoppingFragment fragment;
 
-    public RecyclerViewAdapter(List<ShoppingItem> list, Context context) {
+    public RecyclerViewAdapter(List<ShoppingItem> list, Context context, shoppingFragment fragment) {
         this.list = list;
         this.context = context;
+        this.fragment = fragment;
     }
 
     @Override
@@ -47,9 +51,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.title.setText(list.get(position).description);
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        String dateAdded = df.format(list.get(position).date);
-        holder.description.setText(dateAdded);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = df.parse(list.get(position).date);
+            SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.yyyy / HH:mm:ss");
+            String dateAdded = df2.format(date);
+            holder.description.setText(dateAdded);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.itemCheckBox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.v("myApp", "Item update successfull");
+                        fragment.fill_with_data();
                     }
 
                     @Override

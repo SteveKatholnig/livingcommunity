@@ -1,17 +1,17 @@
 package com.katholnigs.livingcommunity.model;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 public class ShoppingItem {
     public int id;
     public String description;
-    public Date date;
+    public String date;
     public int done;
     public int com_id;
     public int user_id;
 
-    public ShoppingItem(String description, Date date, int done, int user_id, int com_id){
+    public ShoppingItem(String description, String date, int done, int user_id, int com_id){
         this.description = description;
         this.date = date;
         this.done = done;

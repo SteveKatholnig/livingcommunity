@@ -24,7 +24,7 @@
             android:layout_gravity="center_vertical"
             android:text="Create community"
             android:layout_weight="1.5"
-            android:textSize="35sp"
+            android:textSize="28sp"
             android:id="@+id/budget_headline"
             android:textColor="@android:color/white"
             android:layout_margin="5dp"/>
@@ -36,7 +36,7 @@
             android:id="@+id/create_com_comfirmed"
             android:layout_weight="0.5"
             android:clickable="true"
-            android:background="@null"/>
+            android:background="@drawable/state_list_drawable"/>
 
     </LinearLayout>
 
@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="Enter community name"
+            android:textSize="25dp"
             android:inputType="textEmailAddress" />
 
 

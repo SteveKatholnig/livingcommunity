@@ -20,7 +20,7 @@
             android:layout_gravity="center_vertical"
             android:text="Profile"
             android:layout_weight="1.5"
-            android:textSize="35sp"
+            android:textSize="28sp"
             android:id="@+id/budget_headline"
             android:textColor="@android:color/white"
             android:layout_margin="5dp"/>

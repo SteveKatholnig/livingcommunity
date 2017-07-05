@@ -83,6 +83,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         //getting email and password from edit texts
         String email = editTextEmail.getText().toString().trim();
         String password  = editTextPassword.getText().toString().trim();
+        String firstname = editTextFirstname.getText().toString().trim();
+        String lastname = editTextLastname.getText().toString().trim();
 
         //checking if email and passwords are empty
         if(TextUtils.isEmpty(email)){
@@ -92,6 +94,16 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         if(TextUtils.isEmpty(password)){
             Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(firstname)){
+            Toast.makeText(this,"Please enter firstname",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(lastname)){
+            Toast.makeText(this,"Please enter lastname",Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -111,7 +123,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             createUserInDatabase();
                         }else{
                             //display some message here
-                            Toast.makeText(RegistrationActivity.this,"RegistrationActivity Error",Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegistrationActivity.this,"Please enter a valid email adress or password!",Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }
@@ -138,7 +150,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(RegistrationActivity.this, "User created!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegistrationActivity.this, "User created!", Toast.LENGTH_SHORT).show();
                 //User u = response.body();
                 //Log.v("myApp", u.toString());
                 finish();
@@ -147,7 +159,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(RegistrationActivity.this, "error:(", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegistrationActivity.this, "error:(", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
                 } catch (Throwable throwable) {

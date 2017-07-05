@@ -1,7 +1,9 @@
 package com.katholnigs.livingcommunity.fragments;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ import com.katholnigs.livingcommunity.model.Community;
 import com.katholnigs.livingcommunity.model.User;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,6 +107,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
         buttonLeaveCommunity.setOnClickListener(this);
         buttonInviteToCommunity.setOnClickListener(this);
 
+        callAsynchronousTask();
         fill_with_data();
     }
 
@@ -253,7 +258,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<Community> call, Throwable t) {
-                Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "error with community!", Toast.LENGTH_SHORT).show();
                 try {
                     throw t;
                 } catch (Throwable throwable) {
@@ -279,6 +284,7 @@ public class profileFragment extends Fragment implements View.OnClickListener {
                 Community community = response.body();
                 //Toast.makeText(getActivity(), community.size(), Toast.LENGTH_SHORT).show();
                 textViewCommunityName.setText("Invited to: " + community.name);
+                buttonInviteToCommunity.setVisibility(View.VISIBLE);
 
             }
 
@@ -319,6 +325,34 @@ public class profileFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
+    }
+
+    public void callAsynchronousTask() {
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            new AsyncTask<String, Void, String>() {
+                                @Override
+                                protected String doInBackground(String... strings) {
+                                    fill_with_data();
+                                    return null;
+                                }
+
+                            }.execute();
+                            // PerformBackgroundTask this class is the class that extends AsynchTask
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 5000); //execute in every 50000 ms
     }
 
 }
